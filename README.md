@@ -125,7 +125,7 @@ Equation 11: Null Node Required\
 In this section, we display the results of running the algorithm with both the QUBO and ILP techniques for five assets, showing the time required to run the model for both techniques. Time is denoted in milliseconds. The input data to the model are cryptocurrency futures order-book data, specifically the first five seconds of futures data in May 2023 based on five popular cryptocurrencies: Bitcoin, Binance Coin, Ethereum, XRP, and Solana. The data was taken from Binance's open-access database ("Orderbook Cryptocurrency," 2023).
 
 Figure 3: Model Run Time Table\
-![image](README_Images\image11.png)![image](README_Images\image13.png)
+![image](README_Images/image11.png)![image](README_Images/image13.png)
 
 As shown in Figure 3 above, the ILP approach derived significant efficiency gains compared to the QUBO approach with five assets. The average run time across five trials for the QUBO approach is around 293 milliseconds, while the average run time for the ILP is around 78 milliseconds. This makes the ILP almost 275% faster than the QUBO. However, the total objective function for the QUBO was, on average, 1.5% lower than the ILP, suggesting the QUBO produced better results. This is dependent on the hyperparameters used for the QUBO.
 

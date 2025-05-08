@@ -1,8 +1,8 @@
 #Import packages
 using Pkg, CSV, DataFrames, Statistics, Plots, Ipopt, Combinatorics, Distances, LinearAlgebra, AmplNLWriter, NBInclude, Gurobi, JuMP, Graphs, GraphRecipes#, PyCall
 
-@nbinclude("Similarity Factor & Bid-Ask Prices Parameterized.ipynb")
-@nbinclude("Cost Function Parameterized.ipynb")
+@nbinclude("..\\Similarity Factor & Bid-Ask Prices Parameterized.ipynb")
+@nbinclude("..\\Cost Function Parameterized.ipynb")
 @nbinclude("Penalty Function Parameterized.ipynb")
 
 const env = Gurobi.Env()

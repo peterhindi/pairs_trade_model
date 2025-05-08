@@ -1,9 +1,9 @@
 using Pkg, CSV, DataFrames, Statistics, Plots, Ipopt, Combinatorics, Distances, LinearAlgebra, AmplNLWriter, NBInclude, Gurobi, JuMP, Graphs, GraphRecipes, JuMP, Pkg, CSV, DataFrames, Statistics, Plots, Ipopt, Combinatorics, Distances, LinearAlgebra, AmplNLWriter, NBInclude
 
-include("data_read.jl")
+include("..\\data_read.jl")
 include("trades.jl")
-@nbinclude("TSP Pairs Trade Parameterized.ipynb")
-@nbinclude("Similarity Factor & Bid-Ask Prices Parameterized.ipynb")
+@nbinclude("..\\Models\\ILP\\TSP Pairs Trade Parameterized.ipynb")
+@nbinclude("..\\Models\\Similarity Factor & Bid-Ask Prices Parameterized.ipynb")
 include("account.jl")
 
 

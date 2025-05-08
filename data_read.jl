@@ -4,13 +4,12 @@ using Pkg, CSV, DataFrames, DynamicAxisWarping, Distances, Plots, NBInclude
 initial_time_df = []
 
 #Read in asset-level prices
-btcdf = CSV.read("..\\..\\Crypto Tick Data\\BTCUSDT\\BTCUSDT-bookTicker-2023-05.csv", DataFrame)
-bnbdf = CSV.read("..\\..\\Crypto Tick Data\\BNBUSDT\\BNBUSDT-bookTicker-2023-05.csv", DataFrame)
-ethdf = CSV.read("..\\..\\Crypto Tick Data\\ETHUSDT\\ETHUSDT-bookTicker-2023-05.csv", DataFrame)
-xrpdf = CSV.read("..\\..\\Crypto Tick Data\\XRPUSDT\\XRPUSDT-bookTicker-2023-05.csv", DataFrame)
-soldf = CSV.read("..\\..\\Crypto Tick Data\\SOLUSDT\\SOLUSDT-bookTicker-2023-05.csv", DataFrame)
+btcdf = CSV.read("Test Data\\btc_book-2024-08-01-trimmed.csv", DataFrame)
+dgcdf = CSV.read("Test Data\\dgc_book-2024-08-01-trimmed.csv", DataFrame)
+ethdf = CSV.read("Test Data\\eth_book-2024-08-01-trimmed.csv", DataFrame)
+ltcdf = CSV.read("Test Data\\ltc_book-2024-08-01-trimmed.csv", DataFrame)
 
-twoddf = [[btcdf] [bnbdf] [ethdf] [xrpdf] [soldf]]
+twoddf = [[btcdf] [dgcdf] [ethdf] [ltcdf]]
 
 for (loop_index, df) in enumerate(twoddf)
      df = (select(df,[:"best_bid_price",:"best_ask_price",:"best_ask_qty",:"best_bid_qty",:"event_time", "transaction_time"]))
@@ -46,10 +45,9 @@ for (loop_index, df) in enumerate(twoddf)
      print("here second")
 end
 
-@nbinclude("TSP Pairs Trade Parameterized.ipynb")
-@nbinclude("Similarity Factor & Bid-Ask Prices Parameterized.ipynb")
-include("QUBO Pairs Trade Parameterized.jl")
-
+@nbinclude("Models\\ILP\\TSP Pairs Trade Parameterized.ipynb")
+@nbinclude("Models\\Similarity Factor & Bid-Ask Prices Parameterized.ipynb")
+include("Models\\QUBO\\QUBO Pairs Trade Parameterized.jl")
 
 level_2_df = []
 
@@ -78,11 +76,3 @@ display(TSP_Pairs_Trade(similarity, ask_price_df, bid_price_df, 15))
 println("")
 println("above is the ILP result")
 end
-
-thingg = [[1,1],[1,3]]
-
-[1,1] in thingg
-
-x=1
-y=2
-[x,y] in thingg

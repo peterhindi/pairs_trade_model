@@ -1,4 +1,4 @@
-include("data_read.jl")
+include("..\\data_read.jl")
 mutable struct Account
      trade_size
      balance #initialize with starting balance  

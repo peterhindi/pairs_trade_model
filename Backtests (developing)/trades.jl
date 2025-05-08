@@ -1,6 +1,6 @@
 using Pkg, CSV, DataFrames, Statistics, Plots, Ipopt, Combinatorics, Distances, LinearAlgebra, AmplNLWriter, NBInclude, Gurobi, JuMP, Graphs, GraphRecipes#, PyCall
 
-@nbinclude("TSP Pairs Trade Parameterized.ipynb")
+@nbinclude("..\\Models\\ILP\\TSP Pairs Trade Parameterized.ipynb")
 
 mutable struct Modelrun
      solution

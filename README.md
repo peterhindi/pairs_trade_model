@@ -29,18 +29,18 @@ In this section, the HFPT algorithm that this research implements using both QUB
 This research utilizes a network graph approach to visualize the asset universe. An example network graph is provided below, representing a universe of four assets. The weight values relate to the interactions between each asset, or node.
 
 Figure 1: Network Graph Representation of the Asset Universe\
-![image](README_Images\image14.png)
+![image](README_Images/image14.png)
 
 *Cost Function and Optimization*\
 The HFPT algorithm involves the use of a cost function, defined below.
 
 Equation 1: Cost Function\
-![image](README_Images\image1.png)
+![image](README_Images/image1.png)
 
 The algorithm aims to minimize the cost function, which represents the summed weights of activated edges, by optimizing the decision variable $b_{i,j}$. This optimization is formally defined below,
 
 Equation 2: Cost Optimization\
-![image](README_Images\image2.png)
+![image](README_Images/image2.png)
 
 where $w_{i,j}$ denotes the edge weights, and $b_{i,j}$ acts as a binary decision variable for whether an edge is activated.
 
@@ -48,7 +48,7 @@ where $w_{i,j}$ denotes the edge weights, and $b_{i,j}$ acts as a binary decisio
 The expanded calculation of the weight variable, $w_{i,j}$, is shown in Equation 3 below.
 
 Equation 3: Weight calculation\
-![image](README_Images\image3.png)
+![image](README_Images/image3.png)
 
 Edge weights are the product of a similarity factor, $s_{i,j}$, and the spread between $ask_{j}$ and $bid_{i}$. $s_{i,j}$ is normalized within [0,1] and is calculated on a rolling daily basis. $ask_{j}$ denotes the lowest ask price for asset *j*, standardized on the ask price at the beginning of the calendar day. The variable $bid_{i}$ denotes the highest bid price of asset *i*, and is also standardized on the bid price at the beginning of the calendar day.
 
@@ -58,7 +58,7 @@ $w_{i,j}$ is at its lowest when  $s_{i,j}$ is at its highest and the spread is m
 The similarity factor, $s_{i,j}$, is based on a distance calculation using price data from a rolling one day window. It is based on the reciprocal dynamic time warping (DTW) distance between asset pairs, as shown in Equation 4 below.
 
 Equation 4: Similarity Factor Formula\
-![image](README_Images\image4.png)
+![image](README_Images/image4.png)
 
 DTW is an algorithm that measures the similarity of time-series data that differ in time frames, where a larger distance denotes lower similarity (Lee, 2019). As such, lower DTW distance leads to a similarity factor closer to one, and a higher DTW distance leads to a similarity factor closer to zero. 
 
@@ -68,7 +68,7 @@ The intended output of the model is a cycle, where the beginning and end of the 
 Below is an example of the model’s output in its raw form, as a binary matrix. There are five assets, with the null node noted as “null”. The binary values represent $b_{i,j}$ in Equation 1 and Equation 2, namely the activation of edges between each asset. The rows represent *i* and the columns represent *j* for each pair.
 
 Figure 2: Matrix Representation of Model Output\
-![image](README_Images\image15.png)
+![image](README_Images/image15.png)
 
 The above output denotes the path (0 &rarr; A &rarr; C &rarr; D &rarr; 0), or shorting A, simultaneously buying and shorting C, and buying D.
 
@@ -89,7 +89,7 @@ Note that this research uses lazy constraints to enforce the elimination of subt
 Below is a penalty term for the QUBO that forbids breaking rules one to four above, introduced by Tatsumura et al. (2023).
 
 Equation 5: Penalty Function\
-![image](README_Images\image5.png)
+![image](README_Images/image5.png)
 
 In the above equation, $T_{i,j}$ represents an indicator for whether the pair *i,j* is in the tabu list, and the index 0 represents the null node. The weight between any node and the null node is 0.
 
@@ -100,32 +100,32 @@ Tatsumura et al. (2023) explains the purpose of each term below:
 Next, we adjust the optimization function in Equation 2 to include this penalty function, which increases the cost function when rules are broken, disincentivizing incorrect outputs. The updated overall cost function for the QUBO is shown below, where $m_{c}$ and $m_{p}$ are cost and penalty hyperparameters, respectively. In the results section below, the cost and penalty hyperparameters are set as 1 and 100000000, respectively, to ensure that all of the rules are enforced by the penalty function. The efficiency and quality of results will depend on the balance of hyperparameters between the cost and penalty function.
 
 Equation 6: QUBO Total Cost Function\
-![image](README_Images\image6.png)
+![image](README_Images/image6.png)
 
 *Rule Enforcement: ILP*\
 Because the ILP is capable of using constraints, the implementation of the rules is more simple and involves the simple constraints shown below, where n represents the collection of assets in the universe.
 
 Equation 7: Inflow of Each Asset Must be One or Less\
-![image](README_Images\image7.png)
+![image](README_Images/image7.png)
 
 Equation 8: Outflow of Each Asset Must be One or Less\
-![image](README_Images\image8.png)
+![image](README_Images/image8.png)
 
 Equation 9: Inflow and Outflow Must be Equal\
-![image](README_Images\image9.png)
+![image](README_Images/image9.png)
 
 Equation 10: Exclude Pairs in the Tabu List\
-![image](README_Images\image10.png)
+![image](README_Images/image10.png)
 
 Equation 11: Null Node Required\
-![image](README_Images\image11.png)![image](README_Images\image12.png)
+![image](README_Images/image11.png)![image](README_Images/image12.png)
 
 # Results
 
 In this section, we display the results of running the algorithm with both the QUBO and ILP techniques for five assets, showing the time required to run the model for both techniques. Time is denoted in milliseconds. The input data to the model are cryptocurrency futures order-book data, specifically the first five seconds of futures data in May 2023 based on five popular cryptocurrencies: Bitcoin, Binance Coin, Ethereum, XRP, and Solana. The data was taken from Binance's open-access database ("Orderbook Cryptocurrency," 2023).
 
 Figure 3: Model Run Time Table\
-![image](README_Images/image11.png)![image](README_Images/image13.png)
+![image](README_Images/image13.png)
 
 As shown in Figure 3 above, the ILP approach derived significant efficiency gains compared to the QUBO approach with five assets. The average run time across five trials for the QUBO approach is around 293 milliseconds, while the average run time for the ILP is around 78 milliseconds. This makes the ILP almost 275% faster than the QUBO. However, the total objective function for the QUBO was, on average, 1.5% lower than the ILP, suggesting the QUBO produced better results. This is dependent on the hyperparameters used for the QUBO.
 
